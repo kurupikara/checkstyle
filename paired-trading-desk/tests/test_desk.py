@@ -19,6 +19,7 @@ from desk.handoff import (
 )
 from desk.ledger import append_events, verify
 from desk.market import load_fixture_book, load_launches
+from desk.agent_api import main as agent_api_main
 from desk.session import halt, run_paper
 from desk.web import make_server
 
@@ -115,6 +116,36 @@ class HandoffTest(unittest.TestCase):
             hummingbot_argv(cfg, "BTC-USDT", live=True)
         with self.assertRaises(HandoffError):
             pump_yaml(replace(cfg, live_pump_buy=1), enabled=False)
+
+
+class AgentApiTest(unittest.TestCase):
+    def test_cycle_halt_and_resume_are_paper_only(self) -> None:
+        agent_json(["resume"])
+        out = io_cycle()
+        self.assertEqual(out["mode"], "paper")
+        self.assertGreater(out["equity_usd"], 0)
+        self.assertGreater(len(out["fills"]), 0)
+        halted = agent_json(["halt", "uji"])
+        self.assertEqual(halted["killed"], "uji")
+        blocked = io_cycle()
+        self.assertEqual(blocked["fills"], [])
+        self.assertTrue(agent_json(["resume"])["resumed"])
+
+
+def agent_json(args: list[str]) -> dict:
+    import io
+    from contextlib import redirect_stdout
+
+    buffer = io.StringIO()
+    with redirect_stdout(buffer):
+        code = agent_api_main(args)
+    if code != 0:
+        raise AssertionError(buffer.getvalue())
+    return json.loads(buffer.getvalue())
+
+
+def io_cycle() -> dict:
+    return agent_json(["cycle"])
 
 
 class SessionTest(unittest.TestCase):

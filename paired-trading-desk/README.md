@@ -1,5 +1,7 @@
 # Paired desk
 
+Agent yang menjalankan meja ini ada di folder saudara `paired-desk-agent`. Dari situ: `npx @grok/agent-sdk dev`. Agent itu hanya memanggil siklus paper.
+
 Meja trading paper yang memasangkan lima repositori sesuai pekerjaan yang sudah mereka tulis sendiri. Siklus bawaan berjalan tanpa API key, tanpa RPC, dan tanpa mengirim order sungguhan.
 
 ```bash
