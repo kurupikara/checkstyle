@@ -1,0 +1,55 @@
+{
+  "mode": "paper",
+  "capital_usd": 10000,
+  "capital_sol": 1.0,
+  "risk_on_symbol": "BTC-USDT",
+  "universe": [
+    {"symbol": "AAPL", "kind": "equity", "venue": "ai_hedge_fund"},
+    {"symbol": "BTC-USDT", "kind": "crypto", "venue": "hummingbot"},
+    {"symbol": "CHOP", "kind": "equity", "venue": "ai_hedge_fund"}
+  ],
+  "research": {
+    "fast": 5,
+    "slow": 15,
+    "min_total_return": 0.0,
+    "max_drawdown": 0.35
+  },
+  "committee": {
+    "min_vote": 0.2,
+    "max_weight": 0.3
+  },
+  "risk": {
+    "max_order_usd": 1500,
+    "max_gross_usd": 8000,
+    "rebalance_band_usd": 200,
+    "max_open_launches": 2,
+    "portfolio_drawdown_halt": 0.2
+  },
+  "fees_bps": {
+    "usd": 10,
+    "sol": 100
+  },
+  "launch_lane": {
+    "enabled": true,
+    "platforms": ["pump_fun", "lets_bonk"],
+    "buy_amount_sol": 0.05,
+    "max_token_age_seconds": 120,
+    "take_profit": 0.25,
+    "stop_loss": 0.15,
+    "max_hold_steps": 4
+  },
+  "engines": {
+    "vibe": "builtin",
+    "ai_hedge_fund": "builtin",
+    "hummingbot": "builtin",
+    "pumpfun": "builtin",
+    "grok": "builtin"
+  },
+  "live": {
+    "exchange": "",
+    "trading_pair": "BTC-USDT",
+    "pump_buy_amount_sol": 0.001,
+    "pump_platform": "pump_fun",
+    "pump_listener": "logs"
+  }
+}
